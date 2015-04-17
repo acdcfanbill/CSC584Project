@@ -1,0 +1,9 @@
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\bin\Debug\TechViewMockup.exe
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\bin\Debug\TechViewMockup.pdb
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.Form1.resources
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.Properties.Resources.resources
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.csproj.GenerateResource.Cache
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.exe
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.pdb
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\obj\x86\Debug\TechViewMockup.csprojResolveAssemblyReference.cache
+C:\Users\Bill.Conn\Documents\Visual Studio 2010\Projects\TechViewMockup\TechViewMockup\bin\Debug\TechViewMockup.exe.config

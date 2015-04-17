@@ -1,0 +1,3 @@
+# exclude all the lucene stuff
+/docs_dbschema/*
+!/docs_dbschema/*.sql
