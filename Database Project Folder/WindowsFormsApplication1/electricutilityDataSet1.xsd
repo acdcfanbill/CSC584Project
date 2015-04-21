@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="electricutilityDataSet1" targetNamespace="http://tempuri.org/electricutilityDataSet1.xsd" xmlns:mstns="http://tempuri.org/electricutilityDataSet1.xsd" xmlns="http://tempuri.org/electricutilityDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="electricutilityConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="electricutilityConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.WindowsFormsApplication1.Properties.Settings.GlobalReference.Default.electricutilityConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ticketstatusTableAdapter" GeneratorDataComponentClassName="ticketstatusTableAdapter" Name="ticketstatus" UserDataComponentName="ticketstatusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="electricutilityConnectionString (Settings)" DbObjectName="electricutility.ticketstatus" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `name` FROM `electricutility`.`ticketstatus`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="name" DataSetColumn="name" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="electricutilityDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="electricutilityDataSet1" msprop:Generator_UserDSName="electricutilityDataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ticketstatus" msprop:Generator_TableClassName="ticketstatusDataTable" msprop:Generator_TableVarName="tableticketstatus" msprop:Generator_TablePropName="ticketstatus" msprop:Generator_RowDeletingName="ticketstatusRowDeleting" msprop:Generator_RowChangingName="ticketstatusRowChanging" msprop:Generator_RowEvHandlerName="ticketstatusRowChangeEventHandler" msprop:Generator_RowDeletedName="ticketstatusRowDeleted" msprop:Generator_UserTableName="ticketstatus" msprop:Generator_RowChangedName="ticketstatusRowChanged" msprop:Generator_RowEvArgName="ticketstatusRowChangeEvent" msprop:Generator_RowClassName="ticketstatusRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
