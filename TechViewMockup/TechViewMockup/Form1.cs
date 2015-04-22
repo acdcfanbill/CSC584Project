@@ -19,6 +19,10 @@ namespace TechViewMockup
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
+        private int selectedPart = -1;
+        private int selectedTech = -1;
+        private int selectedTicket = -1;
+        private int selectedPartToRemove = -1;
 
         string myConnString = "server=127.0.0.1;user id=electric_util_ad;password=eleadmin;database=electricutility;Pooling=false;";
 
@@ -47,6 +51,9 @@ namespace TechViewMockup
         {
             System.Windows.Forms.ComboBox box = (ComboBox) sender;
 
+            //set our selected tech
+            selectedTech = Convert.ToInt32(box.SelectedValue);
+
             string theDate = dateTimePicker1.Value.ToString("yyyy-MM-dd");
             Console.WriteLine(theDate);
             
@@ -62,6 +69,11 @@ namespace TechViewMockup
                     DataTable dTable = new DataTable();
                     myAdapter.Fill(dTable);
                     techTicketsDataGrid.DataSource = dTable;
+                    if (dTable == null || dTable.Rows.Count <= 0)
+                    {
+                        //updateTicketInfo(ticketId, custId, name, address1, address2, address3, notes, statusId);
+                        updateTicketInfo(-1, -1, "", "", "", "", "", -1);
+                    }
                     myAdapter.Dispose();
                     myComm.Dispose();
                 }
@@ -71,6 +83,8 @@ namespace TechViewMockup
             }
 
             MySqlConnection.ClearAllPools();
+
+            
 
             // we want to load specific data into the Ticket Data Grid
             //Console.WriteLine(sender.GetType());
@@ -121,6 +135,7 @@ namespace TechViewMockup
             if(box.SelectedRows.Count > 0)
             {
                 int ticketId = (int) box.SelectedRows[0].Cells[0].Value;
+                selectedTicket = ticketId;
                 //Console.WriteLine(ticketId);
                 //Display query
                 string queryTicket = "SELECT * FROM TicketInfo WHERE ticketId = " + ticketId + ";";
@@ -176,11 +191,24 @@ namespace TechViewMockup
 
         private void updateTicketInfo(int ticketId, int custId, String name, String addr1, String addr2, String addr3, String notes, int statusId)
         {
-            ticketIdTextBox.Text = ticketId.ToString();
-            customerIdTextBox.Text = custId.ToString();
-            custAddressTextBox.Text = name+"\r\n"+addr1+"\r\n"+addr2+"\r\n"+addr3;
-            notesTextBox.Text = notes;
-            ticketStatusDropDown.SelectedValue = statusId;
+            if (ticketId < 0)
+            {
+                ticketIdTextBox.Text = "";
+                customerIdTextBox.Text = "";
+                custAddressTextBox.Text = "";
+                notesTextBox.Text = "";
+                ticketStatusDropDown.SelectedValue = 0;
+                this.partsOnTixDisplay.DataSource = null;
+            }
+            else
+            {
+                ticketIdTextBox.Text = ticketId.ToString();
+                customerIdTextBox.Text = custId.ToString();
+                custAddressTextBox.Text = name + "\r\n" + addr1 + "\r\n" + addr2 + "\r\n" + addr3;
+                notesTextBox.Text = notes;
+                ticketStatusDropDown.SelectedValue = statusId;
+                fillPerTicket(ticketId);
+            }
         }
 
         private void updateTicketStatusButton_Click(object sender, EventArgs e)
@@ -206,6 +234,141 @@ namespace TechViewMockup
 
             MySqlConnection.ClearAllPools();
         }
+
+        private void searchPartBtn_MouseClick(object sender, MouseEventArgs e)
+        {
+            //int i = 
+            DataGridViewRow row = searchPartDisplay.SelectedRows[0];
+            //row[];
+        }
+
+        private void searchPartDisplay_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = e.RowIndex;
+            if (row >= 0)
+            {
+                DataGridViewRow selectedRow = searchPartDisplay.Rows[row];
+                //String test = selectedRow.Cells[0].Value.ToString();
+                //Console.WriteLine(test);
+                selectedPart = Convert.ToInt32(selectedRow.Cells[0].Value);
+            }
+        }
+
+        private void addPartBtn_Click(object sender, EventArgs e)
+        {
+            int ticketId = selectedTicket;
+            int techId = selectedTech;
+            int itemId = selectedPart;
+
+            if (ticketId == -1 || techId == -1 || itemId == -1)
+                return;
+
+            using (MySqlConnection myConn = new MySqlConnection(myConnString))
+            {
+                //string query = "select * from TechDailyTicket where techId = " + box.SelectedValue + ";";
+                string query = "INSERT INTO ItemsUsed VALUES(NULL, " + ticketId + ", " + itemId + ", " + techId + ", 1);"; //always add one for starters
+                Console.WriteLine(query);
+                using (MySqlCommand myComm = new MySqlCommand(query, myConn))
+                {
+                    myComm.Connection.Open();
+                    myComm.ExecuteNonQuery();
+                    myComm.Dispose();
+                }
+                myConn.Close();
+                myConn.Dispose();
+                MySqlConnection.ClearPool(myConn);
+            }
+
+            MySqlConnection.ClearAllPools();
+
+            //refresh the per ticket stuff
+            fillPerTicket(ticketId);
+        }
+
+        private void fillPerTicket(int ticketId)
+        {
+            DataTable ticketTable = new DataTable();
+
+            using (MySqlConnection myConn = new MySqlConnection(myConnString))
+            {
+                //string query = "select * from TechDailyTicket where techId = " + box.SelectedValue + ";";
+                string query = "SELECT * FROM PerTicket WHERE ticketId=" + ticketId + ";"; //always add one for starters
+                Console.WriteLine(query);
+                using (MySqlCommand myComm = new MySqlCommand(query, myConn))
+                {
+                    MySqlDataAdapter myAdapter = new MySqlDataAdapter();
+                    myAdapter.SelectCommand = myComm;
+                    myAdapter.Fill(ticketTable);
+
+                    myComm.Dispose();
+                }
+                myConn.Close();
+                myConn.Dispose();
+                MySqlConnection.ClearPool(myConn);
+            }
+
+            MySqlConnection.ClearAllPools();
+
+            //this.perticketTableAdapter.Fill(ticketTable);
+            this.partsOnTixDisplay.DataSource = ticketTable;
+            resetPartsOnDisplayForRowOne();
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            int ticketId = selectedTicket;
+            int itemId = selectedPartToRemove;
+
+            if (ticketId == -1 || itemId == -1)
+                return;
+
+            using (MySqlConnection myConn = new MySqlConnection(myConnString))
+            {
+                //string query = "select * from TechDailyTicket where techId = " + box.SelectedValue + ";";
+                string query = "DELETE FROM ItemsUsed WHERE ticketId=" + ticketId + " AND itemId=" + itemId + ";"; //always add one for starters
+                Console.WriteLine(query);
+                using (MySqlCommand myComm = new MySqlCommand(query, myConn))
+                {
+                    myComm.Connection.Open();
+                    myComm.ExecuteNonQuery();
+                    myComm.Dispose();
+                }
+                myConn.Close();
+                myConn.Dispose();
+                MySqlConnection.ClearPool(myConn);
+            }
+
+            MySqlConnection.ClearAllPools();
+
+            //refresh the per ticket stuff
+            fillPerTicket(ticketId);
+        }
+
+        private void partsOnTixDisplay_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = e.RowIndex;
+            if (row >= 0)
+            {
+                DataGridViewRow selectedRow = partsOnTixDisplay.Rows[row];
+                String test = selectedRow.Cells[1].Value.ToString();
+                Console.WriteLine("row index is: " + test);
+                selectedPartToRemove = Convert.ToInt32(selectedRow.Cells[1].Value);
+            }
+        }
+
+        private void resetPartsOnDisplayForRowOne()
+        {
+            if (partsOnTixDisplay.Rows.Count != 0)
+            {
+                DataGridViewRow selectedRow = partsOnTixDisplay.Rows[0];
+                selectedPartToRemove = Convert.ToInt32(selectedRow.Cells[1].Value);
+            }
+            else
+            {
+                selectedPartToRemove = -1;
+            }
+        }
+
 
         //public bool checkIfTech (DataGridViewRow row, int techId)
         //{

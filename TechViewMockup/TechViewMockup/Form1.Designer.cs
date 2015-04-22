@@ -49,6 +49,8 @@
             this.CustomerIDLabel = new System.Windows.Forms.Label();
             this.customerIdTextBox = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.addPartBtn = new System.Windows.Forms.Button();
             this.searchPartDisplay = new System.Windows.Forms.DataGridView();
             this.itemIdDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,8 +84,6 @@
             this.statusTableAdapter = new TechViewMockup.electricutilityDataSetTableAdapters.statusTableAdapter();
             this.perticketTableAdapter = new TechViewMockup.electricutilityDataSetTableAdapters.perticketTableAdapter();
             this.itemtableTableAdapter = new TechViewMockup.electricutilityDataSetTableAdapters.itemtableTableAdapter();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.techTicketsDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.techdailyticketBindingSource)).BeginInit();
@@ -287,7 +287,7 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.button2);
+            this.groupBox5.Controls.Add(this.deleteButton);
             this.groupBox5.Controls.Add(this.button1);
             this.groupBox5.Controls.Add(this.addPartBtn);
             this.groupBox5.Controls.Add(this.searchPartDisplay);
@@ -303,6 +303,25 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Parts";
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(234, 125);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 8;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(112, 241);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // addPartBtn
             // 
             this.addPartBtn.Location = new System.Drawing.Point(232, 82);
@@ -311,6 +330,7 @@
             this.addPartBtn.TabIndex = 6;
             this.addPartBtn.Text = "Add ";
             this.addPartBtn.UseVisualStyleBackColor = true;
+            this.addPartBtn.Click += new System.EventHandler(this.addPartBtn_Click);
             // 
             // searchPartDisplay
             // 
@@ -325,11 +345,14 @@
             this.priceDataGridViewTextBoxColumn});
             this.searchPartDisplay.DataSource = this.itemtableBindingSource;
             this.searchPartDisplay.Location = new System.Drawing.Point(13, 34);
+            this.searchPartDisplay.MultiSelect = false;
             this.searchPartDisplay.Name = "searchPartDisplay";
             this.searchPartDisplay.ReadOnly = true;
             this.searchPartDisplay.RowHeadersVisible = false;
+            this.searchPartDisplay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.searchPartDisplay.Size = new System.Drawing.Size(197, 151);
             this.searchPartDisplay.TabIndex = 5;
+            this.searchPartDisplay.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.searchPartDisplay_CellClick);
             // 
             // itemIdDataGridViewTextBoxColumn1
             // 
@@ -377,6 +400,7 @@
             this.searchPartBtn.TabIndex = 4;
             this.searchPartBtn.Text = "Search";
             this.searchPartBtn.UseVisualStyleBackColor = true;
+            this.searchPartBtn.MouseClick += new System.Windows.Forms.MouseEventHandler(this.searchPartBtn_MouseClick);
             // 
             // searchPartLabel
             // 
@@ -407,11 +431,14 @@
             this.quantityDataGridViewTextBoxColumn});
             this.partsOnTixDisplay.DataSource = this.perticketBindingSource;
             this.partsOnTixDisplay.Location = new System.Drawing.Point(333, 21);
+            this.partsOnTixDisplay.MultiSelect = false;
             this.partsOnTixDisplay.Name = "partsOnTixDisplay";
             this.partsOnTixDisplay.ReadOnly = true;
             this.partsOnTixDisplay.RowHeadersVisible = false;
+            this.partsOnTixDisplay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.partsOnTixDisplay.Size = new System.Drawing.Size(204, 246);
             this.partsOnTixDisplay.TabIndex = 1;
+            this.partsOnTixDisplay.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.partsOnTixDisplay_CellClick);
             // 
             // ticketIdDataGridViewTextBoxColumn1
             // 
@@ -579,24 +606,6 @@
             // 
             this.itemtableTableAdapter.ClearBeforeFill = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(112, 241);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(234, 125);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Delete";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -686,7 +695,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button button1;
     }
 }
