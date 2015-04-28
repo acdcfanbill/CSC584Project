@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ScheduleView.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ConnectionStr" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SERVER=localhost;PORT=3306;UID=root; Pwd=1!Lgodugu;DATABASE=electricutility;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
